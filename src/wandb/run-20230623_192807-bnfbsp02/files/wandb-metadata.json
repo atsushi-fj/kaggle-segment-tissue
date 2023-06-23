@@ -1,0 +1,78 @@
+{
+    "os": "Linux-5.15.0-73-generic-x86_64-with-debian-bullseye-sid",
+    "python": "3.6.9",
+    "heartbeatAt": "2023-06-23T10:28:08.492878",
+    "startedAt": "2023-06-23T10:28:07.735516",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "-config",
+        "config1.yaml"
+    ],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "src/train.py",
+    "git": {
+        "remote": "https://github.com/atsushi-fj/kaggle-segment-tissue.git",
+        "commit": "8b0d00a153f794d98fec6380e1e82385d1a1ba0d"
+    },
+    "email": "atsushi061452@icloud.com",
+    "root": "/home/usr4/fujita/Desktop/kaggle-segment-tissue",
+    "host": "zara",
+    "username": "fujita",
+    "executable": "/home/usr4/fujita/Desktop/kaggle-segment-tissue/kaggle2023/bin/python",
+    "cpu_count": 6,
+    "cpu_count_logical": 6,
+    "cpu_freq": {
+        "current": 3163.6066666666666,
+        "min": 800.0,
+        "max": 4000.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2800.0,
+            "min": 800.0,
+            "max": 4000.0
+        },
+        {
+            "current": 2800.0,
+            "min": 800.0,
+            "max": 4000.0
+        },
+        {
+            "current": 2800.0,
+            "min": 800.0,
+            "max": 4000.0
+        },
+        {
+            "current": 3896.322,
+            "min": 800.0,
+            "max": 4000.0
+        },
+        {
+            "current": 2800.0,
+            "min": 800.0,
+            "max": 4000.0
+        },
+        {
+            "current": 3885.318,
+            "min": 800.0,
+            "max": 4000.0
+        }
+    ],
+    "disk": {
+        "total": 62.204654693603516,
+        "used": 14.847206115722656
+    },
+    "gpu": "NVIDIA GeForce GTX 1050 Ti",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce GTX 1050 Ti",
+            "memory_total": 4294967296
+        }
+    ],
+    "memory": {
+        "total": 15.546314239501953
+    }
+}

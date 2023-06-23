@@ -16,6 +16,7 @@ def train_step(model,
         masks = masks.unsqueeze(1)
         loss = loss_fn(outputs, masks)
         train_loss += loss.item() 
+        print(train_loss)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -40,6 +41,7 @@ def val_step(model,
 
     val_loss = val_loss / len(dataloader)
     return val_loss
+
 
 def train(model, 
           train_dataloader, 

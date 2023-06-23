@@ -5,7 +5,7 @@ import torch
 import numpy as np
 import wandb 
 from pathlib import Path
-import datetime
+from datetime import datetime
 
 
 class EarlyStopping:
@@ -45,12 +45,13 @@ class EarlyStopping:
         self.val_loss_min = val_loss
         
 
-def load_config(file="config.yaml"):
+def load_config(file="config1.yaml"):
     """Load config file"""
-    config_path = Path("./config/")
+    config_path = Path("../config/")
     with open(config_path / file, 'r') as file:
         cfg = yaml.safe_load(file)
     return cfg
+
 
 def seed_everything(seed=42):
     random.seed(seed)

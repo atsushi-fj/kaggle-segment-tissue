@@ -19,7 +19,7 @@ from inferense import eval_model
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(
-        description="NES model : car racing task")
+        description="segment model : kaggle segment tissue")
     
     parser.add_argument("-config", type=str, default="config1.yaml",
                         help="Set config file")
@@ -27,11 +27,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     cfg = load_config(file=args.config)
-    name = create_display_name(experiment_name=cfg.experiment_name,
-                               model_name=cfg.model_name,
-                               extra=cfg.extra)
+    name = create_display_name(experiment_name=cfg["experiment_name"],
+                               model_name=cfg["model_name"],
+                               extra=cfg["extra"])
 
-    with wandb.init(project=cfg.project,
+    with wandb.init(project=cfg["project"],
                     name=name,
                     config=cfg):
         
@@ -41,9 +41,9 @@ if __name__ == "__main__":
         
         seed_everything(seed=cfg.seed)
         
-        train_image_folder = "input/data/train"
-        val_image_folder = "input/data/test"
-        labels_file = "input/data/polygons.jsonl"
+        train_image_folder = "../input/data/train"
+        val_image_folder = "../input/data/test"
+        labels_file = "../input/data/polygons.jsonl"
         
         train_dataset = CustomDataset(image_dir=train_image_folder,
                                       labels_file=labels_file)
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         
         # Training model
         model.to(device)
-        loss_fn = torch.nn.BCELoss
+        loss_fn = torch.nn.BCELoss()
         optimizer = torch.optim.Adam(model.parameters(), lr=cfg.lr)
         earlystopping = EarlyStopping(patience=cfg.patience, verbose=True)
         
