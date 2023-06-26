@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from utils import load_config, create_display_name, seed_everything, EarlyStopping
 from data_loader import CustomDataset, create_dataloader
 from models.baseline.baseline import SegmentationModel
-from engine import train
+from engine import train, train_for_submit
 from inferense import eval_model
 
 
@@ -41,20 +41,26 @@ if __name__ == "__main__":
         
         seed_everything(seed=cfg.seed)
         
-        train_image_folder = "../input/data/train"
-        val_image_folder = "../input/data/test"
-        labels_file = "../input/data/polygons.jsonl"
+        if cfg.mode == "train":
         
-        train_dataset = CustomDataset(image_dir=train_image_folder,
-                                      labels_file=labels_file)
+            train_dataset = CustomDataset(image_dir=cfg.train_image_folder,
+                                        labels_file=cfg.train_labels_file)
+            
+            val_dataset = CustomDataset(image_dir=cfg.train_image_folder,
+                                        labels_file=cfg.val_labels_file)
         
-        val_dataset = CustomDataset(image_dir=val_image_folder,
-                                    labels_file=labels_file)
-        
-        train_dataloader, val_dataloader = create_dataloader(train_dataset, val_dataset,
-                                                            batch_size=cfg.batch_size,
-                                                            pin_memory=True,
-                                                            train_drop_last=True)
+            train_dataloader, val_dataloader = create_dataloader(train_dataset, val_dataset,
+                                                                batch_size=cfg.batch_size,
+                                                                pin_memory=True,
+                                                                train_drop_last=True)
+        else:
+            train_dataset = CustomDataset(image_dir=cfg.train_image_folder,
+                                        labels_file=cfg.labels_file)
+            
+            train_dataloader = create_dataloader(train_dataset, None,
+                                                batch_size=cfg.batch_size,
+                                                pin_memory=True,
+                                                train_drop_last=True)
         
         model = SegmentationModel()
         
@@ -64,14 +70,21 @@ if __name__ == "__main__":
         optimizer = torch.optim.Adam(model.parameters(), lr=cfg.lr)
         earlystopping = EarlyStopping(patience=cfg.patience, verbose=True)
         
-        
-        train(model, train_dataloader, val_dataloader,
-            optimizer=optimizer,
-            loss_fn=loss_fn,
-            epochs=cfg.epochs,
-            earlystopping=earlystopping,
-            model_name=cfg.model_path,
-            device=device)
+        if cfg.mode == "train":
+            train(model, train_dataloader, val_dataloader,
+                optimizer=optimizer,
+                loss_fn=loss_fn,
+                epochs=cfg.epochs,
+                earlystopping=earlystopping,
+                model_name=cfg.model_path,
+                device=device)
+        else:
+            train_for_submit(model, train_dataloader,
+                             optimizer=optimizer,
+                             loss_fn=loss_fn,
+                             epochs=cfg.epochs,
+                             model_name=cfg.model_path,
+                             device=device)
         
         model.load_state_dict(torch.load(f=cfg.load_model_path))
         model.to(device)

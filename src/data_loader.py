@@ -5,6 +5,8 @@ import os
 import json
 import numpy as np
 from skimage.draw import polygon2mask
+from sklearn.model_selection import train_test_split
+import gc
 
 
 class CustomDataset(Dataset):
@@ -66,6 +68,8 @@ def create_dataloader(train_dataset, val_dataset,
                                   num_workers=num_workers,
                                   pin_memory=pin_memory,
                                   drop_last=train_drop_last)
+    if val_dataset is None:
+        return train_dataloader
     
     val_dataloader = DataLoader(val_dataset,
                                  batch_size=batch_size,
@@ -74,4 +78,22 @@ def create_dataloader(train_dataset, val_dataset,
                                  pin_memory=pin_memory)
     
     return train_dataloader, val_dataloader
+
+
+def data_split(X, y,
+               test_size=0.2,
+               random_state=42,
+               stratify=None):
     
+    # Split data
+    X_train, X_val, y_train, y_val = train_test_split(X, y, 
+                                                    test_size=test_size,
+                                                    random_state=random_state,
+                                                    stratify=stratify)
+    del X, y
+    gc.collect()
+    train_dataset = CustomDataset(X_train, y_train)
+    val_dataset = CustomDataset(X_val, y_val)
+    
+    return train_dataset, val_dataset
+

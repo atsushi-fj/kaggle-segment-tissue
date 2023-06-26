@@ -1,6 +1,7 @@
 import torch
 from tqdm.auto import tqdm
 import wandb
+from utils import save_model
 
 
 def train_step(model, 
@@ -16,7 +17,6 @@ def train_step(model,
         masks = masks.unsqueeze(1)
         loss = loss_fn(outputs, masks)
         train_loss += loss.item() 
-        print(train_loss)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -36,6 +36,7 @@ def val_step(model,
         for batch, (images, masks) in enumerate(dataloader):
             images, masks = images.to(device), masks.to(device)
             outputs = model(images)
+            masks = masks.unsqueeze(1)
             loss = loss_fn(outputs, masks)
             val_loss += loss.item()
 
@@ -65,7 +66,7 @@ def train(model,
                                 loss_fn=loss_fn,
                                 optimizer=optimizer,
                                 device=device)
-        
+    
         test_loss = val_step(model=model,
                             dataloader=test_dataloader,
                             loss_fn=loss_fn,
@@ -87,3 +88,38 @@ def train(model,
         if earlystopping.early_stop: 
             print("Early Stopping!")
             break
+        
+        
+def train_for_submit(model, 
+                    train_dataloader, 
+                    optimizer,
+                    loss_fn,
+                    epochs,
+                    model_name,
+                    device):
+ 
+    results = {"train_loss": []}
+    
+    model.to(device)
+
+    for epoch in tqdm(range(epochs)):
+        train_loss = train_step(model=model,
+                                dataloader=train_dataloader,
+                                loss_fn=loss_fn,
+                                optimizer=optimizer,
+                                device=device)
+    
+        wandb.log({"Epoch": epoch+1,
+                   "train_loss": train_loss})
+        
+        print(
+          f"Epoch: {epoch+1} | "
+          f"train_loss: {train_loss:.4f} | "
+        )
+        
+        save_model(model=model,
+                   target_dir="models",
+                   model_name=model_name)
+
+        results["train_loss"].append(train_loss)
+        

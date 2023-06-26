@@ -1,0 +1,21 @@
+rows_per_frame: 543
+
+seed: 42
+lr: 0.0001
+batch_size: 8
+img_size: [1, 543, 3]
+epochs: 200
+patience: 100
+model_path: "cnn_baseline_model.pth"
+load_model_path: "models/cnn_baseline_model.pth"
+project: "kaggle-segment-tissue"
+experiment_name: "cnn_baseline"
+model_name: "cnn_baseline"
+extra: "baseline"
+train_image_folder: "../input/data/train"
+test_image_folder: "../input/data/test"
+labels_file: "../input/data/polygons.jsonl"
+train_labels_file: "../input/preprocess_data/train_polygons.jsonl"
+val_labels_file: "../input/preprocess_data/val_polygons.jsonl"
+mode: "train"
+
