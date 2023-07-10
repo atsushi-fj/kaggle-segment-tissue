@@ -45,7 +45,7 @@ class CustomDataset(Dataset):
 
         # Convert PIL Image and mask to PyTorch tensor
         image = torch.tensor(np.array(image), dtype=torch.float32).permute(2, 0, 1)  # Shape: [C, H, W]
-        mask = torch.tensor(mask, dtype=torch.float32)
+        mask = torch.tensor(mask, dtype=torch.float32).unsqueeze(0)
 
         if self.transform:
             # Apply the transformation to the image if provided

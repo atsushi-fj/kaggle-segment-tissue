@@ -12,6 +12,7 @@ from torch.utils.data import DataLoader
 from utils import load_config, create_display_name, seed_everything, EarlyStopping
 from data_loader import CustomDataset, create_dataloader
 from models.baseline.baseline import SegmentationModel
+from models.baseline.unet import UNet
 from engine import train, train_for_submit
 from inferense import eval_model
 
@@ -62,18 +63,20 @@ if __name__ == "__main__":
                                                 pin_memory=True,
                                                 train_drop_last=True)
         
-        model = SegmentationModel()
+        model = UNet(encoder_name=cfg.encoder_name,
+                     encoder_weights=cfg.encoder_weights,
+                     in_channels=cfg.in_channels,
+                     classes=cfg.n_classes,
+                     activation=cfg.activation)
         
         # Training model
         model.to(device)
-        loss_fn = torch.nn.BCELoss()
         optimizer = torch.optim.Adam(model.parameters(), lr=cfg.lr)
         earlystopping = EarlyStopping(patience=cfg.patience, verbose=True)
         
         if cfg.mode == "train":
             train(model, train_dataloader, val_dataloader,
                 optimizer=optimizer,
-                loss_fn=loss_fn,
                 epochs=cfg.epochs,
                 earlystopping=earlystopping,
                 model_name=cfg.model_path,
@@ -81,7 +84,6 @@ if __name__ == "__main__":
         else:
             train_for_submit(model, train_dataloader,
                              optimizer=optimizer,
-                             loss_fn=loss_fn,
                              epochs=cfg.epochs,
                              model_name=cfg.model_path,
                              device=device)
@@ -91,7 +93,6 @@ if __name__ == "__main__":
         
         result = eval_model(model=model,
                             data_loader=val_dataloader,
-                            loss_fn=loss_fn,
                             device=device)
         
         print(f"\n{result}")

@@ -4,7 +4,6 @@ from tqdm.auto import tqdm
 
 def eval_model(model,
                data_loader,
-               loss_fn,
                device):
     """Returns a dictionary containing the results of model predicting on data_loader."""
     loss = 0
@@ -12,10 +11,8 @@ def eval_model(model,
     with torch.inference_mode():
         for images, maksks in tqdm(data_loader):
             images, masks = images.to(device), maksks.to(device)
-            outputs = model(images)
-
-            loss += loss_fn(outputs, masks)
-            
+            logits, loss = model(images)
+            loss += loss.item()
         loss /= len(data_loader)
 
     return {"model_name": model.__class__.__name__, 

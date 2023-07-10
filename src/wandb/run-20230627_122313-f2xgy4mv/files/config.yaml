@@ -20,7 +20,7 @@ img_size:
   - 3
 epochs:
   desc: null
-  value: 200
+  value: 10000
 patience:
   desc: null
   value: 100
@@ -57,6 +57,9 @@ train_labels_file:
 val_labels_file:
   desc: null
   value: ../input/preprocess_data/val_polygons.jsonl
+mode:
+  desc: null
+  value: train
 _wandb:
   desc: null
   value:
@@ -65,7 +68,7 @@ _wandb:
     framework: torch
     is_jupyter_run: false
     is_kaggle_kernel: true
-    start_time: 1687774682.925017
+    start_time: 1687836193.607968
     t:
       1:
       - 1

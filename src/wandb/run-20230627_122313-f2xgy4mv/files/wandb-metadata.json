@@ -1,0 +1,78 @@
+{
+    "os": "Linux-5.15.0-73-generic-x86_64-with-debian-bullseye-sid",
+    "python": "3.6.9",
+    "heartbeatAt": "2023-06-27T03:23:14.405716",
+    "startedAt": "2023-06-27T03:23:13.569901",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "-config",
+        "config1.yaml"
+    ],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "src/train.py",
+    "git": {
+        "remote": "https://github.com/atsushi-fj/kaggle-segment-tissue.git",
+        "commit": "e404847f3e1c20804836fc6d3671def1c36464a3"
+    },
+    "email": "atsushi061452@icloud.com",
+    "root": "/home/usr4/fujita/Desktop/kaggle-segment-tissue",
+    "host": "elephant6",
+    "username": "fujita",
+    "executable": "/home/usr4/fujita/Desktop/kaggle-segment-tissue/kaggle2023/bin/python",
+    "cpu_count": 6,
+    "cpu_count_logical": 6,
+    "cpu_freq": {
+        "current": 2634.0538333333334,
+        "min": 800.0,
+        "max": 4100.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3000.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 3000.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 3000.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 3000.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 3000.0,
+            "min": 800.0,
+            "max": 4100.0
+        },
+        {
+            "current": 804.323,
+            "min": 800.0,
+            "max": 4100.0
+        }
+    ],
+    "disk": {
+        "total": 686.1055679321289,
+        "used": 20.281845092773438
+    },
+    "gpu": "NVIDIA GeForce GTX 1060 6GB",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce GTX 1060 6GB",
+            "memory_total": 6442450944
+        }
+    ],
+    "memory": {
+        "total": 31.271862030029297
+    }
+}

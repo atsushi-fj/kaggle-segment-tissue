@@ -171,3 +171,6 @@ cython_debug/
 *.jsonl
 299-tiles
 input/data/
+input/coco/
+input/preprocess_data
+notebooks/YOLO

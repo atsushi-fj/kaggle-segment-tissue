@@ -11,7 +11,7 @@ lr:
   value: 0.0001
 batch_size:
   desc: null
-  value: 8
+  value: 4
 img_size:
   desc: null
   value:
@@ -20,16 +20,16 @@ img_size:
   - 3
 epochs:
   desc: null
-  value: 200
+  value: 1000
 patience:
   desc: null
   value: 100
 model_path:
   desc: null
-  value: cnn_baseline_model.pth
+  value: cnn_baseline_submit_model.pth
 load_model_path:
   desc: null
-  value: models/cnn_baseline_model.pth
+  value: models/cnn_baseline_submit_model.pth
 project:
   desc: null
   value: kaggle-segment-tissue
@@ -57,6 +57,24 @@ train_labels_file:
 val_labels_file:
   desc: null
   value: ../input/preprocess_data/val_polygons.jsonl
+mode:
+  desc: null
+  value: train
+encoder_name:
+  desc: null
+  value: resnet101
+encoder_weights:
+  desc: null
+  value: imagenet
+in_channels:
+  desc: null
+  value: 3
+n_classes:
+  desc: null
+  value: 1
+activation:
+  desc: null
+  value: null
 _wandb:
   desc: null
   value:
@@ -65,21 +83,26 @@ _wandb:
     framework: torch
     is_jupyter_run: false
     is_kaggle_kernel: true
-    start_time: 1687774682.925017
+    start_time: 1688723966.890641
     t:
       1:
       - 1
       - 5
+      - 41
       - 53
       - 55
+      - 63
+      - 74
       2:
       - 1
       - 5
+      - 41
       - 53
       - 55
+      - 63
+      - 74
       3:
       - 2
-      - 3
       - 13
       - 16
       - 23
